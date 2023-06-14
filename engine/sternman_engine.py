@@ -1,15 +1,5 @@
-from abc import ABC
+from engine.engine import Engine
 
-from car import Car
-
-
-class SternmanEngine(Car, ABC):
-    def __init__(self, last_service_date, warning_light_is_on):
-        super().__init__(last_service_date)
-        self.warning_light_is_on = warning_light_is_on
-
-    def engine_should_be_serviced(self):
-        if self.warning_light_is_on:
-            return True
-        else:
-            return False
+class SternmanEngine(Engine):
+    def needs_servicing(self,current_mileage,last_servicing_mileage):
+        pass #This does not require any calculation statements as it only needs the warning_light_on to be checked
