@@ -1,5 +1,7 @@
 #This code is used to take inputs from user
 
+import random
+
 import unittest
 
 import datetime
@@ -11,6 +13,9 @@ from engine.sternman_engine import SternmanEngine
 from battery.splinder_battery import SplinderBattery
 from battery.nubbin_battery import NubbinBattery
 
+from tire.carrigan_tire import CarriganTire
+from tire.octoprime_tire import OctoprimeTire
+
 from car.car import Car
 
 class Servicing_test(unittest.TestCase):
@@ -21,16 +26,19 @@ class Servicing_test(unittest.TestCase):
         while redo.lower()=="yes":
             engine_type=check_engine_type()
             battery_type=check_battery_type()
+            tire_type=check_tire_type()
             last_servicing_date=check_last_servicing_date()
             current_mileage=check_current_mileage()
             last_servicing_mileage=check_last_servicing_mileage(current_mileage)
             warning_light_on=check_warning_light_on()
+            tire_wear=check_tire_wear()
 
             #Here the values to be used will be printed
-            print("\n\tThese values were selected\n","\t",engine_type.__class__.__name__,"\n\t",battery_type.__class__.__name__,
-                  "\n\t",last_servicing_date,current_mileage,"\n\t",last_servicing_mileage,"\n\t",warning_light_on)
+            print("\n\tThese values were selected\n","\n\t Engine Type:-",engine_type.__class__.__name__,"\n\t Battery Type:-",battery_type.__class__.__name__,
+                  "\n\t Tire Type:-",tire_type.__class__.__name__, "\n\t Last Servicing Date:-",last_servicing_date,"\n\t Current Mileage:-",current_mileage,
+                  "\n\t Last Servicing Mileage:-",last_servicing_mileage,"\n\t Warning light is on:-",warning_light_on,"\n\t Tire wear values:-",tire_wear)
             
-            car1=Car(engine_type,battery_type,last_servicing_date,current_mileage,last_servicing_mileage,warning_light_on)
+            car1=Car(engine_type,battery_type,tire_type,last_servicing_date,current_mileage,last_servicing_mileage,warning_light_on,tire_wear)
 
             if car1.needs_servicing(datetime.datetime.today().date()):
                 print("\n\t Your car needs servicing")
@@ -63,6 +71,17 @@ def check_battery_type():
             return NubbinBattery()
         else:
             print("\n Invalid battery type. ")
+
+def check_tire_type():
+    while True:
+        tire_type=input("Enter the type of Tires in your car (Carrigantire,Octoprimetire):- ")
+    
+        if tire_type.lower() == "carrigantire":
+            return CarriganTire()
+        elif tire_type.lower() == "octoprimetire":
+            return OctoprimeTire()
+        else:
+            print("\n Invalid tire type. ")
 
 def check_last_servicing_date():
     while True:
@@ -104,6 +123,19 @@ def check_warning_light_on():
         else:
             print("Invalid input. ")
             print("\n")
+
+def check_tire_wear():
+    while True:
+        tire_wear= {
+                'tire_1':float(input("Enter Tire 1 wear (0-1):-")),
+                'tire_2':float(input("Enter Tire 2 wear (0-1):-")),
+                'tire_3':float(input("Enter Tire 3 wear (0-1):-")),
+                'tire_4':float(input("Enter Tire 4 wear (0-1):-"))
+            }
+        if all(isinstance(values,(float, int)) and 0 <= values <= 1 for values in tire_wear.values()):
+            return tire_wear
+        else:
+            print("\n Invalid Tire wear value.")
 
 if __name__=='__main__':
     unittest.main()
