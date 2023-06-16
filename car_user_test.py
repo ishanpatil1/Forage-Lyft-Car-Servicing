@@ -1,6 +1,6 @@
-import unittest
+#This code is used to take inputs from user
 
-import random
+import unittest
 
 import datetime
 
@@ -32,7 +32,7 @@ class Servicing_test(unittest.TestCase):
             
             car1=Car(engine_type,battery_type,last_servicing_date,current_mileage,last_servicing_mileage,warning_light_on)
 
-            if car1.needs_servicing(datetime.datetime.today().date())== True:
+            if car1.needs_servicing(datetime.datetime.today().date()):
                 print("\n\t Your car needs servicing")
             else:
                 print("\n\t No need for servicing")
@@ -42,13 +42,7 @@ class Servicing_test(unittest.TestCase):
 #These functions are responsible for user input
 def check_engine_type():
     while True:
-        # For user input
-
-        #engine_type=input("Enter the type of Engine in your car (CapuletEngine,SternmanEngine,WilloughbyEngine):- ")
-
-        # For random values
-
-        engine_type = random.choice(["CapuletEngine", "WilloughbyEngine", "SternmanEngine"])
+        engine_type=input("Enter the type of Engine in your car (CapuletEngine,SternmanEngine,WilloughbyEngine):- ")
 
         if engine_type.lower() == "capuletengine":
             return CapuletEngine()
@@ -61,13 +55,7 @@ def check_engine_type():
 
 def check_battery_type():
     while True:
-        # For user input
-
-        #battery_type=input("Enter the type of Battery in your car (SplinderBattery,NubbinBattery):- ")
-    
-        # For random values
-
-        battery_type = random.choice(["SplinderBattery", "NubbinBattery"])
+        battery_type=input("Enter the type of Battery in your car (SplinderBattery,NubbinBattery):- ")
     
         if battery_type.lower() == "splinderbattery":
             return SplinderBattery()
@@ -77,29 +65,19 @@ def check_battery_type():
             print("\n Invalid battery type. ")
 
 def check_last_servicing_date():
-    # For user input
-
-    # while True:
-    #     last_servicing_date=input("Enter the last date of you car servicing (YYYY-MM-DD):- ")
-    #     try:
-    #         last_servicing_date = datetime.datetime.strptime(last_servicing_date, "%Y-%m-%d").date()
-    #         break
-    #     except ValueError:
-    #         print("Invalid date. ")
-    
-    # For random values
-
-    last_servicing_date = datetime.datetime.now().date() - datetime.timedelta(days=random.randint(1, 365))
+    while True:
+        last_servicing_date=input("Enter the last date of you car servicing (YYYY-MM-DD):- ")
+        try:
+            last_servicing_date = datetime.datetime.strptime(last_servicing_date, "%Y-%m-%d").date()
+            break
+        except ValueError:
+            print("Invalid date. ")
     
     return last_servicing_date 
 
 def check_current_mileage():
     while True:
-        # For user input
-        #current_mileage=int(input("Enter the current mileage of you car:- "))
-
-        # For random values
-        current_mileage = random.randint(0, 100000)
+        current_mileage=int(input("Enter the current mileage of you car:- "))
 
         if isinstance(current_mileage, int):
             return current_mileage
@@ -108,13 +86,7 @@ def check_current_mileage():
 
 def check_last_servicing_mileage(current_mileage):
     while True:
-        # For user input
-
-        #last_servicing_mileage=int(input("Enter the last servicing mileage of you car:- "))
-
-        # For random values
-
-        last_servicing_mileage = random.randint(0, current_mileage)
+        last_servicing_mileage=int(input("Enter the last servicing mileage of you car:- "))
 
         if isinstance(last_servicing_mileage, int) and last_servicing_mileage<current_mileage:
             return last_servicing_mileage
@@ -122,22 +94,16 @@ def check_last_servicing_mileage(current_mileage):
             print("\n Invalid previous servicing mileage")
 
 def check_warning_light_on():
-    # For user input
+    while True:
+        warning_light_on = input("Is the warning light of your car on? (True/False): ")
 
-    # while True:
-    #     #warning_light_on = input("Is the warning light of your car on? (True/False): ")
-    #     if warning_light_on.lower() == "true":
-    #         return True
-    #     elif warning_light_on.lower() == "false":
-    #         return False
-    #     else:
-    #         print("Invalid input. ")
-    #         print("\n")
-    
-    # For random values
-
-    warning_light_on = random.choice([True, False])
-    return warning_light_on
+        if warning_light_on.lower() == "true":
+            return True
+        elif warning_light_on.lower() == "false":
+            return False
+        else:
+            print("Invalid input. ")
+            print("\n")
 
 if __name__=='__main__':
     unittest.main()
